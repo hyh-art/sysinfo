@@ -32,7 +32,7 @@ def index(request):
     return render(request,'host/index.html',locals())
 
 def user(request):
-    pass
+    users=psutil.users()
     return render(request,'host/user.html',locals())
 
 def cpu(request):

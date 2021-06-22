@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'host/base.html' %}  
 
-</body>
-</html>
+{% block title %}用户信息{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h1>登录用户</h1>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <td>用户名</td>
+                <td>登陆主机</td>
+                <td>终端</td>
+                <td>登录时间</td>
+            </tr>
+            {% for user in users%}
+             <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.host }}</td>
+                <td>{{user.terminal  }}</td>
+                <td>{{ user.started}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
