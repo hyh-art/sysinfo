@@ -1,0 +1,6 @@
+<div class="page-header">
+    <a {% if not chart %}id="display"{% endif %} href="/cpu/">CPU 信息</a>
+    <a {% if chart == 'line' %}id="display"{% endif %} href="/cpu/line/">CPU
+        折线图</a>
+    <a {% if chart == 'pie' %}id="display"{% endif %} href="/cpu/pie/">CPU 饼图</a>
+</div>

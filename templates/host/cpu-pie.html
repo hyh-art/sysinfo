@@ -1,0 +1,59 @@
+{% extends 'host/base.html' %}
+{% load timefilter %}
+{% block title %} cpu信息 {% endblock %}
+{% block content %}
+    {% include 'host/cpu-header.html' %}
+    <div>
+        <div id="main" style="width: 80%;height:400px;"></div>
+    </div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [
+                {
+                    name: 'CPU占用百分比分类',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '40',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: {{ cpu_time_percent.user }}, name: '用户'},
+                        {value: {{ cpu_time_percent.system }}, name: '系统'},
+                        {value: {{ cpu_time_percent.idle }}, name: '空闲'},
+
+                    ]
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+{% endblock %}

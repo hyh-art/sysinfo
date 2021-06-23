@@ -1,0 +1,47 @@
+{% extends 'host/base.html' %}
+{% load timefilter %}
+{% block title %} cpu信息 {% endblock %}
+{% block content %}
+    {% include 'host/cpu-header.html' %}
+    <div>
+        <div id="main" style="width: 80%;height:400px;"></div>
+    </div>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        {#首先，声明两个 javascript 的数组#}
+        var series_data = [];
+        var xAxis_data = [];
+
+        {#使用循环，依次将数据库需要展示的数据添加到刚才声明的数组中#}
+        {% for data in datas %}
+            {#series_data.push({{ data.user_percent }})#}
+            {#xAxis_data.push({{ data.create_time }})#}
+
+            series_data.push({{ data.user_percent }})
+            {#注意这里的双引号#}
+            xAxis_data.push("{{ data.create_time}}")
+        {% endfor %}
+
+        option = {
+            xAxis: {
+                type: 'category',
+                data: xAxis_data
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: series_data,
+                type: 'line',
+                smooth: true
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+{% endblock %}
