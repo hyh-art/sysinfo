@@ -35,29 +35,24 @@ def user(request):
     users=psutil.users()
     return render(request,'host/user.html',locals())
 
-def cpu(request,chart=None):
-    logical_core_num = psutil.cpu_count()  #物理cpu核心数
+def cpu(request, chart=None):
+    logical_core_num = psutil.cpu_count()  #
     physical_core_num = psutil.cpu_count(logical=False)
     try:
-      load_avg = os.getloadavg()      #平均负载
+        load_avg = os.getloadavg()
     except Exception as e:
-      load_avg=['','','']
+        load_avg = ['', '', '']
     cpu_time_percent = psutil.cpu_times_percent()
     else_percent = 0.0
-    for i in range(5,10):
-        else_percent+=cpu_time_percent[i]
+    for i in range(3, 5):
+        else_percent += cpu_time_percent[i]
     try:
-        cpu_freq=psutil.cpu_freq()
-    except AttributeError :
-        cpu_freq=None
+        cpu_freq = psutil.cpu_freq()
+    except AttributeError:
+        cpu_freq = None
     if chart == 'line':
-        datas = UserCpuPercent.objects.order_by('-id')[:30]
-        print(datas)
         return render(request, 'host/cpu-line.html', locals())
     elif chart == 'pie':
-        user_percent=cpu_time_percent.user
-        system_percent=cpu_time_percent.system
-        idle_percent=cpu_time_percent.idle
         return render(request, 'host/cpu-pie.html', locals())
     return render(request, 'host/cpu.html', locals())
 def memory(request):

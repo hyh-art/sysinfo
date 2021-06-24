@@ -2,7 +2,6 @@
 {% load timefilter %}
 {% block title %} cpu信息 {% endblock %}
 {% block content %}
-    {% include 'host/cpu-header.html' %}
     <div>
         <div id="cpu_info">
              <table class="table table-bordered">
@@ -71,7 +70,4 @@
                 </tr>
             {% endif %}
         </table>
-        </div>
-    </div>
-
 {% endblock %}
