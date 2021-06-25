@@ -5,6 +5,8 @@ import psutil
 import datetime
 import os,platform
 # Create your views here.
+from host.models import UserCpuPercent
+
 
 def index(request):
     try:
@@ -51,6 +53,7 @@ def cpu(request, chart=None):
     except AttributeError:
         cpu_freq = None
     if chart == 'line':
+        datas = UserCpuPercent.objects.order_by('-id')[:30]   ##折线图显示最新30条记录
         return render(request, 'host/cpu-line.html', locals())
     elif chart == 'pie':
         return render(request, 'host/cpu-pie.html', locals())
